@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+  |
+  |
+  form(method="post", action="/login")
+    | Username: 
+    input(type="text"     , name="userid")
+    <br>
+    | Password: 
+    input(type="password" , name="password")
+    <br>
+    input(type="submit")
+  |
+  |
+  p= msg
+
