@@ -17,11 +17,16 @@ router.post('/login', function(req, res, next) {
 
   if (password === 'a') {
     // good password
-    //req.session = ...
+    req.session.userid = userid;
     res.redirect('/users');
   } else {
     res.render('login', { title: 'Login', msg: 'Username or password incorrect.' });
   }
+});
+
+router.get('/logout', function(req, res, next) {
+  delete req.session.userid;
+  res.redirect('/');
 });
 
 module.exports = router;
