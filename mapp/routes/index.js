@@ -16,12 +16,11 @@ router.post('/login', function(req, res, next) {
   let userid   = req.body.userid;
   let submittedPassword = req.body.password;
   db.getPassword(userid, (err, storedPassword) => {
-    if (err) throw err;
-    if (storedPassword === null) {
+    if (err) {
+      throw err;
+    } else if (storedPassword === null) {
       res.render('login', { title: 'Login', msg: 'Username or password incorrect.' });
-      return;
-    }
-    if (submittedPassword === storedPassword) {
+    } else if (submittedPassword === storedPassword) {
       // good password
       req.session.userid = userid;
       res.redirect('/users');
