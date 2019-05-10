@@ -7,7 +7,7 @@ router.get('*', (req, res, next) => {
 });
 
 router.get('/', function(req, res, next) {
-  res.render('users', { data: 'I am data!' });
+  res.render('users', { userid: req.session.userid });
 });
 
 module.exports = router;
