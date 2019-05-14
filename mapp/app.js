@@ -3,10 +3,13 @@ const express      = require('express');
 const path         = require('path');
 const cookieParser = require('cookie-parser');
 const session      = require('express-session')
+const db           = require('./db')
 //const logger     = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
+db.init();
 
 var app = express();
 
