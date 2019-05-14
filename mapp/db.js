@@ -8,13 +8,12 @@ const pool = new Pool({
   port: 5432
 });
 
-exports.init = function(cb) {
+exports.init = function() {
   pool.connect((err, client, done) => {
     if (err) {
       console.error("Is the database running?");
       throw err;
     }
-    cb();
   });
 }
 
