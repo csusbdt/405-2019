@@ -32,3 +32,19 @@ exports.getPassword = function(userid, cb) {
   });
 };
 
+exports.createUser = function(email, userid, password, cb) {
+  pool.connect((err, client, done) => {
+    if (err) return cb(err);
+    let sql = 'insert into users (userid, password, email) values ($1, $2, $3);';
+    client.query(sql, [userid, password, email], (err, result) => {
+      done();
+      if (err) { cb(err); return; }
+//      if (result.rows.length === 0) {
+//        cb(null, null);
+//        return;
+//      }
+      cb();
+    });
+  });
+};
+

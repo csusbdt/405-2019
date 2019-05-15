@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1= title
+  |
+  |
+  form(method="post", action="/register")
+    | Email: 
+    input(type="text"     , name="email"    , value="a")
+    <br>
+    | Username: 
+    input(type="text"     , name="userid"   , value="a")
+    <br>
+    | Password: 
+    input(type="password" , name="password" , value="a")
+    <br>
+    input(type="submit")
+  |
+  |
+  p= msg
+
