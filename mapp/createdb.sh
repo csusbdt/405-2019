@@ -1,3 +1,5 @@
+echo "
+
 drop table users;
 
 create table users (
@@ -9,3 +11,4 @@ create table users (
 insert into users (userid, password, email) values ('a', 'a', 'a@mail.com');
 insert into users (userid, password, email) values ('b', 'b', 'a@mail.com');
 
+" | psql -h localhost mapp

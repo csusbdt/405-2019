@@ -44,12 +44,16 @@ router.post('/register', function(req, res, next) {
   let email    = req.body.email;
   let userid   = req.body.userid;
   let password = req.body.password;
-  db.createUser(email, userid, password, (err) => {
+  db.createUser(email, userid, password, (err, failMsg) => {
     if (err) {
       throw err;
-    } 
-    req.session.userid = userid;
-    res.redirect('/users');
+    }
+    if (failMsg) {
+      res.render('register', { title: 'Register', msg: failMsg });
+    } else {
+      req.session.userid = userid;
+      res.redirect('/users');
+    }
   });
 });
 

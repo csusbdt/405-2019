@@ -17,6 +17,23 @@ exports.init = function() {
   });
 }
 
+exports.getUser = function(userid, cb) {
+  pool.connect((err, client, done) => {
+    if (err) return cb(err);
+    client.query('select * from users where userid = $1', [userid], function (err, result) {
+      done();
+      if (err) { 
+        cb(err); 
+      } else if (result.rows.length === 0) {
+        cb(null, null);
+      } else {
+        cb(null, result.rows[0]);
+      }
+    });
+  });
+};
+
+
 exports.getPassword = function(userid, cb) {
   pool.connect((err, client, done) => {
     if (err) return cb(err);
@@ -33,18 +50,25 @@ exports.getPassword = function(userid, cb) {
 };
 
 exports.createUser = function(email, userid, password, cb) {
-  pool.connect((err, client, done) => {
-    if (err) return cb(err);
-    let sql = 'insert into users (userid, password, email) values ($1, $2, $3);';
-    client.query(sql, [userid, password, email], (err, result) => {
-      done();
-      if (err) { cb(err); return; }
-//      if (result.rows.length === 0) {
-//        cb(null, null);
-//        return;
-//      }
-      cb();
-    });
+  exports.getUser(userid, (err, user) => {
+    if (err) {
+      cb(err);
+    } else if (user !== null) {
+      cb(null, 'Username already taken.');
+    } else {
+      pool.connect((err, client, done) => {
+        if (err) return cb(err);
+        let sql = 'insert into users (userid, password, email) values ($1, $2, $3);';
+        client.query(sql, [userid, password, email], (err, result) => {
+          done(); 
+          if (err) { 
+            cb(err);
+          } else {
+            cb(null);
+          }
+        });
+      }); 
+    }
   });
 };
 
