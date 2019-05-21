@@ -3,7 +3,8 @@ const { Router } = require('express');
 const router = Router();
 
 router.post('/register', (req, res) => {
-  res.send("It works");
+  const userid = req.body.userid;
+  res.send("Userid: " + userid);
 });
 
 module.exports = router;
