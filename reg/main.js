@@ -1,5 +1,8 @@
 const express = require('express');
 const auth    = require('./auth' );
+const db      = require('./db'   );
+
+db.init();
 
 const app = express();
 
