@@ -1,6 +1,8 @@
 extends layout
 
 block content
+  h1 Home Page
+  p= msg
   form(method='post' action='/register')
     userid: input(name='userid' type='text' value='a')
     br
