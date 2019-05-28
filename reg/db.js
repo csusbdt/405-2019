@@ -38,3 +38,22 @@ module.exports.createUser = (userid, password, email, cb) => {
   });
 };
 
+module.exports.getUser = (userid, cb) => {
+  pool.connect((err, conn, done) => {
+    if (err) throw err;
+    const sql = "select userid, password, email from users where userid = $1";
+    conn.query(sql, [userid], (err, result) => { 
+      done();
+      if (err) {
+        throw err;
+      } else if (result.rowCount === 0) {
+        cb(null, null);
+      } else if (result.rowCount === 1) {
+        cb(null, result.rows[0]);
+      } else {
+        throw Error('Unknown error in getUser.');
+      } 
+    });
+  });
+};
+

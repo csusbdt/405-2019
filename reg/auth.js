@@ -18,5 +18,24 @@ router.post('/register', (req, res) => {
   });
 });
 
+router.post('/login', (req, res) => {
+  const userid   = req.body.userid;
+  const password = req.body.password;
+  db.getUser(userid, (err, user) => {
+    if (err) {
+      throw err;
+    } else if (!user || user.password !== password) {
+      res.render('index', { msg: 'Incorrect username or password.' });
+    } else {
+      res.render('index', { msg: 'Hello, ' + userid });
+    }
+  });
+});
+
+router.post('/logout', (req, res) => {
+  delete req.session.userid;
+  res.render('index', { msg: 'Logged out.'});
+});
+
 module.exports = router;
 
