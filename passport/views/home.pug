@@ -1,0 +1,32 @@
+extends layout
+
+block variables
+  - var title='Home'
+
+block content
+  if msg
+    p= msg
+  else
+    p Welcome.
+  if user
+    h2 Logout
+    form(action='/logout' method='get')
+      input(type='submit' value='Logout')
+  else
+    h2 Login
+    form(action='/login' method='post')
+      label username
+      input(type='text' name='username' value='a')
+      br
+      label password
+      input(type='password' name='password' value='a')
+      br
+      input(type='submit' value='Login')
+    h2 Forgot password
+    form(action='/forgot' method='post')
+      label email
+      input(type='text' name='email' value='a')
+      br
+      input(type='submit' value='Email')
+
+
